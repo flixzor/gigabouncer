@@ -1,6 +1,9 @@
 extends Area2D
 class_name Ball
 
+## All ball movements and collisions are handled in this script, with a single exception: In paddle.gd
+## The manage_collisions() function there transforms the ball outside of the paddle if it clips.
+
 @export var debug : bool = false ## when true, debug messages will be printed for this object
 
 @export var ball_gravity : float = .1
@@ -8,8 +11,6 @@ class_name Ball
 
 var velocity : Vector2 = Vector2(0,0)
 var just_collided : bool = false ## This boolean makes sure the ball escapes its current collision before recolliding.
-
-
 
 func ball_physics_process() -> void:
 	## 1. Check if current forces will result in a collision
@@ -25,11 +26,7 @@ func ball_physics_process() -> void:
 		if collision_fraction != 1.0: # in the freak occurence that the CF is 1.0, don't move the ball. This prevents some wierd glitches
 			position += velocity * collision_fraction # move to position of collision			
 
-		if collider.get_parent().get_parent() is Paddle:
-			velocity += collider.get_parent().get_parent().velocity 
-			position += collider.get_parent().get_parent().velocity
-			#return
-			
+		
 		## Resolve collision
 		var collision_normal = $ShapeCast2D.get_collision_normal(0)
 		velocity = velocity - 2 * (velocity.dot(collision_normal)) * collision_normal
@@ -42,5 +39,10 @@ func ball_physics_process() -> void:
 	position += velocity
 	just_collided = false
 	
+	## prevent accidental out of bounds
+	var ball_radius = $CollisionShape2D.shape.radius
+	position.x = clampf(position.x, ball_radius, DisplayServer.screen_get_size().x -ball_radius)
+	
 	## 3. Apply constant forces for next frame
 	velocity.y += ball_gravity
+	

@@ -17,6 +17,7 @@ size = Vector2(56, 20)
 
 [node name="Paddle" type="Node2D" unique_id=242050865]
 script = ExtResource("1_loxgu")
+debug = true
 
 [node name="TrainingPaddle3" type="Sprite2D" parent="." unique_id=1724282561]
 position = Vector2(0, 32)
