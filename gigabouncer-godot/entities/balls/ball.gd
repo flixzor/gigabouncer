@@ -1,21 +1,35 @@
-extends Node2D
-@export var gravity : float = .1
+extends Area2D
+class_name Ball
+
+@export var debug : bool = false ## when true, debug messages will be printed for this object
+
+@export var ball_gravity : float = .1
 @export_range(0.0,1.0) var bounciness : float = 1 ## At 0 the ball will lose all velocity on collision, at 1 it will bounce forever
 
-var velocity : Vector2 = Vector2(10,10)
+var velocity : Vector2 = Vector2(0,0)
 var just_collided : bool = false ## This boolean makes sure the ball escapes its current collision before recolliding.
 
-func _physics_process(delta: float) -> void:
+
+
+func ball_physics_process() -> void:
 	## 1. Check if current forces will result in a collision
 	$ShapeCast2D.target_position = velocity # check collisions along ball trajectory
 	$ShapeCast2D.force_shapecast_update() # reset shapecaster
 	
 	if $ShapeCast2D.is_colliding() and not just_collided: # if there is a collision, resolve and exit function	
-		var collision_fraction = $ShapeCast2D.get_closest_collision_safe_fraction()		
-
+		var collider = $ShapeCast2D.get_collider(0)
+		var collision_fraction = $ShapeCast2D.get_closest_collision_safe_fraction()
+		
+		Debug.message(debug, "Ball collided with: " + collider.name)
+		
 		if collision_fraction != 1.0: # in the freak occurence that the CF is 1.0, don't move the ball. This prevents some wierd glitches
 			position += velocity * collision_fraction # move to position of collision			
 
+		if collider.get_parent().get_parent() is Paddle:
+			velocity += collider.get_parent().get_parent().velocity 
+			position += collider.get_parent().get_parent().velocity
+			#return
+			
 		## Resolve collision
 		var collision_normal = $ShapeCast2D.get_collision_normal(0)
 		velocity = velocity - 2 * (velocity.dot(collision_normal)) * collision_normal
@@ -29,5 +43,4 @@ func _physics_process(delta: float) -> void:
 	just_collided = false
 	
 	## 3. Apply constant forces for next frame
-	velocity.y += gravity
-	
+	velocity.y += ball_gravity

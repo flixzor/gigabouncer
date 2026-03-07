@@ -1,11 +1,11 @@
 extends Node
 ## SIGNAL BUS
 
-#signal ball_bounced ## emitted when the ball bounces off any object
+#signal paddle_hit_ball ## DEPRECATED
 
 func _ready() -> void:
-	#ball_bounced.connect(report_signals.bind("ball_bounced"))
+	#paddle_hit_ball.connect(report_signals.bind("paddle_hit_ball"))	
 	pass
 
 func report_signals(message):
-	print("signal : " + message)
+	print("signal emitted: " + message)
