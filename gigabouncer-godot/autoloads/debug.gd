@@ -1,6 +1,6 @@
 extends Node
 
 
-func message(debug : bool, message : String):
-	if debug:
-		print(message)
+func message(sender : Object, message : String):
+	if sender.debug:
+		print_rich("[color=green]DEBUG: " + sender.get_parent().name +" / "+ sender.name +" : [/color]"+ message)
