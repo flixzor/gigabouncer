@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://f75lbxki6ywo"]
+
+[ext_resource type="Script" uid="uid://70csrsgqoco7" path="res://level/level_manager.gd" id="1_vonw3"]
+[ext_resource type="PackedScene" uid="uid://2s6g33sk7705" path="res://entities/balls/Ball.tscn" id="2_oi3di"]
+[ext_resource type="PackedScene" uid="uid://csnkahf87x526" path="res://entities/paddles/paddle.tscn" id="3_qohg2"]
+[ext_resource type="Script" uid="uid://dco6c7d7ipr4e" path="res://level/area_2d.gd" id="4_vkbyq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qohg2"]
+size = Vector2(233, 643.5)
+
+[node name="Level" type="Node2D" unique_id=960917288]
+script = ExtResource("1_vonw3")
+
+[node name="Ball" parent="." unique_id=532048275 instance=ExtResource("2_oi3di")]
+unique_name_in_owner = true
+position = Vector2(309, 328)
+gravity = 0.0
+ball_gravity = 0.0
+bounciness = 0.9
+
+[node name="Paddle" parent="." unique_id=242050865 instance=ExtResource("3_qohg2")]
+unique_name_in_owner = true
+position = Vector2(484, 312)
+move_speed = 2.0
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1964965060]
+position = Vector2(958, 15)
+script = ExtResource("4_vkbyq")
+
+[node name="Polygon2D" type="Polygon2D" parent="Area2D" unique_id=892709914]
+polygon = PackedVector2Array(-702, 625, -702, -15, -894, -15, -894, 625)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1049211447]
+position = Vector2(-818.5, 306.75)
+shape = SubResource("RectangleShape2D_qohg2")

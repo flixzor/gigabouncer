@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://csnkahf87x526"]
+
+[ext_resource type="Texture2D" uid="uid://cuhtk6o4mbc8b" path="res://assets/sprites/Training Paddle 3.png" id="1_72ycg"]
+[ext_resource type="Script" uid="uid://dr455g3w3forf" path="res://entities/paddles/paddle.gd" id="1_loxgu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_72ycg"]
+size = Vector2(153, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_loxgu"]
+size = Vector2(45, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ytt47"]
+size = Vector2(5, 13.5)
+
+[node name="Paddle" type="Node2D" unique_id=242050865]
+script = ExtResource("1_loxgu")
+debug = true
+move_friction = 0.7
+
+[node name="TrainingPaddle3" type="Sprite2D" parent="." unique_id=1724282561]
+position = Vector2(0, 32)
+texture = ExtResource("1_72ycg")
+
+[node name="Hitboxes" type="Node2D" parent="." unique_id=294740323]
+
+[node name="HitboxBottom" type="Area2D" parent="Hitboxes" unique_id=1599896673]
+collision_layer = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitboxes/HitboxBottom" unique_id=1155800937]
+polygon = PackedVector2Array(-121, 9, -123, 22, -110, 24, -103, 39, -79, 36, -64, 51, -42, 40, -32, 41, -32, 51, 1, 56, 32, 51, 32, 41, 43, 42, 64, 53, 71, 41, 89, 33, 102, 36, 121, 20, 121, 9)
+
+[node name="HitboxCenter" type="Area2D" parent="Hitboxes" unique_id=1116059398]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/HitboxCenter" unique_id=1595737770]
+position = Vector2(-0.5, 4)
+shape = SubResource("RectangleShape2D_72ycg")
+debug_color = Color(0.2065033, 0.600567, 0.66811866, 0.41960785)
+
+[node name="HitboxLeft" type="Area2D" parent="Hitboxes" unique_id=52163492]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/HitboxLeft" unique_id=661592846]
+position = Vector2(-100, 4)
+shape = SubResource("RectangleShape2D_loxgu")
+debug_color = Color(0.2065033, 0.600567, 0.66811866, 0.41960785)
+
+[node name="HitboxRight" type="Area2D" parent="Hitboxes" unique_id=1609640201]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/HitboxRight" unique_id=636115081]
+position = Vector2(99, 4)
+shape = SubResource("RectangleShape2D_loxgu")
+debug_color = Color(0.2065033, 0.600567, 0.66811866, 0.41960785)
+
+[node name="HitboxLeftEdge" type="Area2D" parent="Hitboxes" unique_id=564937512]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/HitboxLeftEdge" unique_id=659046261]
+position = Vector2(-125.5, 10.5)
+shape = SubResource("RectangleShape2D_ytt47")
+debug_color = Color(0.2065033, 0.600567, 0.66811866, 0.41960785)
+
+[node name="HitboxRightEdge" type="Area2D" parent="Hitboxes" unique_id=462383164]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/HitboxRightEdge" unique_id=946534735]
+position = Vector2(125, 8.75)
+shape = SubResource("RectangleShape2D_ytt47")
+debug_color = Color(0.2065033, 0.600567, 0.66811866, 0.41960785)
